@@ -52,7 +52,10 @@ export default {
 //  watch: watchers,
   methods: {
     search: function() {
+<<<<<<< Updated upstream
       this.getSuggestions(this.search_keyword);
+=======
+>>>>>>> Stashed changes
       this.results = this.getSearchResults();
 
       if(this.sort === 1) {
