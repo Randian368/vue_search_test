@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <div class="input-group">
-      <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keydown="getSuggestions">
+      <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keyup="getSuggestions">
       <div class="input-group-append">
         <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.en.search }}</button>
       </div>

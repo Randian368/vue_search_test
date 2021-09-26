@@ -1,6 +1,6 @@
 <template>
   <div class="autosuggest" v-if="suggestions">
-    <span v-for="(index, word) in suggestions" :key="word" class="autosuggest-word">
+    <span v-for="word in suggestions" :key="word" class="autosuggest-word">
       {{ word }}
     </span>
   </div>
