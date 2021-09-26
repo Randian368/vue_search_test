@@ -19,13 +19,11 @@
 </template>
 
 <script>
-//import HelloWorld from "./components/HelloWorld.vue";
-import SearchBar from "./components/SearchBar.vue";
+import SearchBar from "./components/search/SearchBar.vue";
 
 export default {
   name: "App",
   components: {
-    //HelloWorld,
     SearchBar,
   },
 };
