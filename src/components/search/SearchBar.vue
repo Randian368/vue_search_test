@@ -1,19 +1,18 @@
 <template>
   <div class="search-bar">
     <div class="input-group">
-      <input type="text" class="form-control" id="input-search" v-model="search_keyword">
+      <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keydow="getSuggestions">
       <div class="input-group-append">
         <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.en.search }}</button>
       </div>
     </div>
-    <div class="row search-results-row" v-if="results">
-
-    </div>
+    <autosuggest ref="Autosuggest"></autosuggest>
+    <div class="row search-results-row" v-if="results"></div>
   </div>
 </template>
 
 <script>
-//import Autocorrect from "./SearchAutocorrect.vue";
+import Autosuggest from "./SearchAutosuggest.vue";
 
 let searchbar_component = {
   texts: {
@@ -22,8 +21,38 @@ let searchbar_component = {
       'search': 'Search'
     }
   },
+
+};
+
+/*
+let watchers = {
+  search_keyword: function(new_kw, old_kw) {
+    console.log(old_kw + ' => ' + new_kw);
+  }
+}
+*/
+
+
+export default {
+  name: "SearchBar",
+  components: {
+    Autosuggest
+  },
+  data() {
+    return {
+      products: require('../../data/products.json'),
+      texts: searchbar_component.texts,
+      //results: {},
+      results: [],
+      search_keyword: '',
+      autosuggest_keywords: [],
+      sort: 1,
+    };
+  },
+//  watch: watchers,
   methods: {
     search: function() {
+      this.getSuggestions(this.search_keyword);
       this.results = this.getSearchResults();
 
       if(this.sort === 1) {
@@ -52,35 +81,10 @@ let searchbar_component = {
         let pos_b = product_b.name.toUpperCase().indexOf(keyword);
         return pos_a - pos_b;
       });
+    },
+    getSuggestions(keyword) {
+      return this.$refs.Autosuggest.getSuggestions(keyword);
     }
-  }
-};
-
-/*
-let watchers = {
-  search_keyword: function(new_kw, old_kw) {
-    console.log(old_kw + ' => ' + new_kw);
-  }
-}
-*/
-
-
-export default {
-  name: "SearchBar",
-  data() {
-    return {
-      products: require('../../data/products.json'),
-      texts: searchbar_component.texts,
-      //results: {},
-      results: [],
-      search_keyword: '',
-      sort: 1,
-    };
-  },
-//  watch: watchers,
-  methods: searchbar_component.methods,
-  components: {
-    //Autocorrect
   }
 };
 
