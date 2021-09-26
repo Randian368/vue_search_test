@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <div class="input-group">
-      <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keydow="getSuggestions">
+      <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keydown="getSuggestions">
       <div class="input-group-append">
         <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.en.search }}</button>
       </div>
@@ -82,8 +82,8 @@ export default {
         return pos_a - pos_b;
       });
     },
-    getSuggestions(keyword) {
-      return this.$refs.Autosuggest.getSuggestions(keyword);
+    getSuggestions() {
+      return this.$refs.Autosuggest.getSuggestions(this.search_keyword);
     }
   }
 };
