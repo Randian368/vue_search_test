@@ -1,6 +1,8 @@
 <template>
   <div class="autocorrect">
-    <span v-for="(index, word) in results" :key="word" class="autocorrect-word">{{ word }}</span>
+    <span v-for="(index, word) in results" :key="word" class="autocorrect-word">
+      {{ word }}
+    </span>
   </div>
 </template>
 
