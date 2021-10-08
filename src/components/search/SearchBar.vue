@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.search }}</button>
       </div>
     </div>
-    <autosuggest ref="Autosuggest"></autosuggest>
+    <autosuggest ref="Autosuggest" v-bind:language="language"></autosuggest>
     <div class="row search-results-row" v-if="results"></div>
   </div>
 </template>
