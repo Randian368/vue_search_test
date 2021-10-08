@@ -28,9 +28,9 @@ export default {
       if(search_phrase.length > 2) {
         for(let keyword of this.keywords) {
           if(keyword.toLowerCase().startsWith(search_phrase.toLowerCase())) {
-            suggestions[suggestions.length] = {word: keyword, priority: 1};
+            suggestions[suggestions.length] = {word: keyword, priority: 1 + keyword.length};
           } else if(keyword.toLowerCase().includes(search_phrase.toLowerCase())) {
-            suggestions[suggestions.length] = {word: keyword, priority: 2};
+            suggestions[suggestions.length] = {word: keyword, priority: 200 + keyword.length};
           }
         }
 
