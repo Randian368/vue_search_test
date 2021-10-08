@@ -15,9 +15,9 @@ export default {
     };
   },
   methods: {
-    getSuggestions(keyword) {
+    getSuggestions(keyword, lang = "hu") {
       if(keyword.length > 1) {
-        this.suggestions = [keyword + 'asd'];
+        this.suggestions = [keyword + 'asd' + lang];
       } else {
         this.suggestions = [];
       }

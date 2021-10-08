@@ -3,7 +3,7 @@
     <div class="input-group">
       <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keyup="getSuggestions">
       <div class="input-group-append">
-        <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.en.search }}</button>
+        <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.search }}</button>
       </div>
     </div>
     <autosuggest ref="Autosuggest"></autosuggest>
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       products: require('../../data/products.json'),
-      texts: searchbar_component.texts,
+      texts: searchbar_component.texts[this.language],
       //results: {},
       results: [],
       search_keyword: '',
@@ -49,21 +49,23 @@ export default {
       sort: 1,
     };
   },
+  props: [
+    'language'
+  ],
 //  watch: watchers,
   methods: {
-    search: function() {
-<<<<<<< Updated upstream
+    search() {
       this.getSuggestions(this.search_keyword);
-=======
->>>>>>> Stashed changes
+/*
       this.results = this.getSearchResults();
 
       if(this.sort === 1) {
         this.results = this.sortByRelevance(this.results);
       }
+*/
     },
 
-    getSearchResults: function() {
+    getSearchResults() {
       let keyword = this.search_keyword;
 
       return Object.values(this.products).filter(function(product) {
@@ -77,7 +79,7 @@ export default {
       });
     },
 
-    sortByRelevance: function(results) {
+    sortByRelevance(results) {
       let keyword = this.search_keyword.toUpperCase();
       return results.sort(function(product_a, product_b) {
         let pos_a = product_a.name.toUpperCase().indexOf(keyword);
@@ -86,7 +88,7 @@ export default {
       });
     },
     getSuggestions() {
-      return this.$refs.Autosuggest.getSuggestions(this.search_keyword);
+      return this.$refs.Autosuggest.getSuggestions(this.search_keyword, this.language);
     }
   }
 };

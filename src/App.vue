@@ -3,13 +3,13 @@
   <HelloWorld msg="Welcome to Your Vue.js App" />
 </template> -->
 <template>
-  <div s="aaasd">
+  <div>
     <div class="navbar navbar-expand-lg navbar-light bg-light">
-      <search-bar class="my-2 my-lg-0"></search-bar>
+      <search-bar class="my-2 my-lg-0" v-bind:language="language"></search-bar>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-      <search-bar></search-bar>
+      <search-bar v-bind:language="language"></search-bar>
       </div>
       <div class="panel-body">
         <p></p>
@@ -26,6 +26,11 @@ export default {
   components: {
     SearchBar,
   },
+  data() {
+    return {
+      language: 'en'
+    }
+  }
 };
 </script>
 
