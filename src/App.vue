@@ -20,7 +20,6 @@
 
 <script>
 import SearchBar from "./components/search/SearchBar.vue";
-
 export default {
   name: "App",
   components: {
@@ -28,7 +27,7 @@ export default {
   },
   data() {
     return {
-      language: 'en'
+      language: 'hu'
     }
   }
 };
@@ -43,6 +42,11 @@ export default {
 
  .panel > .panel-heading {
    position:relative;
+ }
+
+.navbar {
+   height: 72px;
+   display:block;
  }
 
 .navbar .search-bar {

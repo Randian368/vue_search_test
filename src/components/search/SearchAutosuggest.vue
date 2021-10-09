@@ -1,5 +1,5 @@
 <template>
-  <div class="autosuggest" v-if="suggestions">
+  <div class="autosuggest" v-if="suggestions.length" :style="dynamicStyle">
     <span v-for="word in suggestions" :key="word" class="autosuggest-word">
       {{ word }}
     </span>
@@ -9,23 +9,31 @@
 <script>
 export default {
   name: 'SearchAutosuggest',
+  el: '.autosuggest',
   data() {
     return {
+      dynamicStyle: '',
       keywords: [],
       suggestions: []
     };
   },
   props: [
-    'language'
+    'language',
+    'calculatedWidth'
   ],
   mounted() {
-    this.keywords = require('../../data/keywords_' + this.language + '.json')
+    this.keywords = require('../../data/keywords_' + this.language + '.json');
+  },
+  watch: {
+    calculatedWidth() {
+      this.dynamicStyle += 'width: ' + this.calculatedWidth + 'px;';
+    }
   },
   methods: {
     getSuggestions(search_phrase) {
       this.suggestions = [];
       let suggestions = [];
-      if(search_phrase.length > 2) {
+      if(search_phrase.length > 1) {
         for(let keyword of this.keywords) {
           if(keyword.toLowerCase().startsWith(search_phrase.toLowerCase())) {
             suggestions[suggestions.length] = {word: keyword, priority: 1 + keyword.length};
@@ -56,7 +64,13 @@ export default {
 
 <style>
 div.autosuggest {
-  margin-top: 8px;
+  background: hsl(211deg 40% 50% / 6%);
+  z-index: 100;
+  padding: 6px;
+  padding-top: 12px;
+  border-radius: 3px;
+  position: relative;
+  top: -1px;
 }
 
 span.autosuggest-word {
@@ -65,5 +79,7 @@ span.autosuggest-word {
     color: white;
     border-radius: 6px;
     margin-right: 6px;
+    margin-bottom: 3px;
+    display: inline-block;
 }
 </style>

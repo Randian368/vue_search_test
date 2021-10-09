@@ -1,12 +1,12 @@
 <template>
   <div class="search-bar">
     <div class="input-group">
-      <input type="text" class="form-control" id="input-search" v-model="search_keyword" v-on:keyup="getSuggestions">
+      <input type="text" ref="inputSearchBar" class="form-control input-search" v-model="search_keyword" v-on:keyup="getSuggestions">
       <div class="input-group-append">
         <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.search }}</button>
       </div>
     </div>
-    <autosuggest ref="Autosuggest" v-bind:language="language"></autosuggest>
+    <autosuggest ref="Autosuggest" v-bind:language="language" v-bind:calculated-width="inputSearchWidth"></autosuggest>
     <div class="row search-results-row" v-if="results"></div>
   </div>
 </template>
@@ -19,6 +19,10 @@ let searchbar_component = {
     en: {
       'search-placeholder': 'Search product name',
       'search': 'Search'
+    },
+    hu:  {
+      'search-placeholder': 'Terméknév vagy tulajdonság',
+      'search': 'Keresés'
     }
   },
 
@@ -47,7 +51,11 @@ export default {
       search_keyword: '',
       autosuggest_keywords: [],
       sort: 1,
+      inputSearchWidth: 0,
     };
+  },
+  mounted() {
+    this.inputSearchWidth = this.$refs.inputSearchBar.offsetWidth;
   },
   props: [
     'language'
@@ -96,6 +104,9 @@ export default {
 </script>
 
 <style>
+  .search-bar {
+    z-index: 10;
+  }
   .input-group {
     position: relative;
     display: -webkit-box;
