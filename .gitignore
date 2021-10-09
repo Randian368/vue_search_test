@@ -28,3 +28,5 @@ dist/js/chunk-vendors.7cb6e3d9.js
 dist/index.html
 dist/index.html
 deploy.sh
+deploy.sh
+dist/index.html

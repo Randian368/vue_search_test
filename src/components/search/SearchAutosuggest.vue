@@ -1,6 +1,6 @@
 <template>
   <div class="autosuggest" v-if="suggestions.length" :style="dynamicStyle">
-    <span v-for="word in suggestions" :key="word" class="autosuggest-word">
+    <span v-for="word in suggestions" :key="word" class="autosuggest-word" v-on:click="addToSearchBar">
       {{ word }}
     </span>
   </div>
@@ -55,6 +55,12 @@ export default {
           });
         }
       }
+    },
+
+    addToSearchBar(event) {
+      let word = event.target.textContent
+      this.$parent.$refs.inputSearchBar.value = word;
+      this.suggestions = [];
     }
   }
 }
@@ -81,5 +87,6 @@ span.autosuggest-word {
     margin-right: 6px;
     margin-bottom: 3px;
     display: inline-block;
+    cursor: pointer;
 }
 </style>
