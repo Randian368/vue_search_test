@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      language: 'hu'
+      language: 'en'
     }
   }
 };

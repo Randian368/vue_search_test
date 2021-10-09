@@ -1,5 +1,6 @@
 <template>
   <div class="autosuggest" v-if="suggestions.length" :style="dynamicStyle">
+    <span class="autosuggest-prompt" :class="{ small: calculatedWidth < 300 }">{{ texts.prompt }}</span>
     <span v-for="word in suggestions" :key="word" class="autosuggest-word" v-on:click="addToSearchBar" v-on:mouseenter="decreaseOpacity" v-on:mouseleave="resetOpacity">
       {{ word }}
     </span>
@@ -7,12 +8,24 @@
 </template>
 
 <script>
+let searchautosuggest_component = {
+  texts: {
+    en: {
+      'prompt': 'Did you mean: '
+    },
+    hu: {
+      'prompt': 'Erre gondoltál?'
+    }
+  }
+};
+
 export default {
   name: 'SearchAutosuggest',
   el: '.autosuggest',
   data() {
     return {
       dynamicStyle: '',
+      texts: searchautosuggest_component.texts[this.language],
       keywords: [],
       suggestions: []
     };
@@ -91,7 +104,7 @@ div.autosuggest {
 }
 
 span.autosuggest-word {
-    padding: 4px;
+    padding: 1px 4px;
     background: #007bff73;
     color: white;
     border-radius: 6px;
@@ -99,5 +112,17 @@ span.autosuggest-word {
     margin-bottom: 3px;
     display: inline-block;
     cursor: pointer;
+}
+
+span.autosuggest-prompt {
+  font-size: 0.9em;
+  margin-right: 12px;
+  opacity: 0.72;
+}
+
+span.autosuggest-prompt.small {
+  position: relative;
+  display: block;
+  top: -6px;
 }
 </style>
