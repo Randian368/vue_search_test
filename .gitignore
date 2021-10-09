@@ -19,14 +19,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-dist/js/chunk-vendors.7cb6e3d9.js.map
-dist/js/app.97e4a34b.js.map
-dist/js/app.97e4a34b.js
-dist/css/app.f67963a6.css
-deploy.sh
-dist/js/chunk-vendors.7cb6e3d9.js
-dist/index.html
-dist/index.html
-deploy.sh
-deploy.sh
-dist/index.html
+dist/*
+dist
