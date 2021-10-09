@@ -1,6 +1,6 @@
 <template>
   <div class="autosuggest" v-if="suggestions.length" :style="dynamicStyle">
-    <span v-for="word in suggestions" :key="word" class="autosuggest-word" v-on:click="addToSearchBar">
+    <span v-for="word in suggestions" :key="word" class="autosuggest-word" v-on:click="addToSearchBar" v-on:mouseenter="decreaseOpacity" v-on:mouseleave="resetOpacity">
       {{ word }}
     </span>
   </div>
@@ -21,13 +21,13 @@ export default {
     'language',
     'calculatedWidth'
   ],
-  mounted() {
-    this.keywords = require('../../data/keywords_' + this.language + '.json');
-  },
   watch: {
     calculatedWidth() {
       this.dynamicStyle += 'width: ' + this.calculatedWidth + 'px;';
     }
+  },
+  mounted() {
+    this.keywords = require('../../data/keywords_' + this.language + '.json');
   },
   methods: {
     getSuggestions(search_phrase) {
@@ -59,9 +59,20 @@ export default {
 
     addToSearchBar(event) {
       let word = event.target.textContent
+
+      this.$parent.search_keyword = word;
       this.$parent.$refs.inputSearchBar.value = word;
+
       this.suggestions = [];
+    },
+
+    decreaseOpacity(event) {
+      event.target.style.background = "#007bffcc";
+    },
+    resetOpacity(event) {
+      event.target.style.background = "#007bff73";
     }
+
   }
 }
 
@@ -81,7 +92,7 @@ div.autosuggest {
 
 span.autosuggest-word {
     padding: 4px;
-    background: rgb(0 123 255 / 45%);
+    background: #007bff73;
     color: white;
     border-radius: 6px;
     margin-right: 6px;
