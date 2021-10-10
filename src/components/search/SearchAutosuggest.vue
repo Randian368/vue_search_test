@@ -77,6 +77,8 @@ export default {
       this.$parent.$refs.inputSearchBar.value = word;
 
       this.suggestions = [];
+
+      this.$emit('autosuggest_accepted');
     },
 
     decreaseOpacity(event) {

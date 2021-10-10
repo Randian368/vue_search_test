@@ -6,13 +6,16 @@
         <button type="button" class="btn btn-primary input-group-text" v-on:click="search">{{ texts.search }}</button>
       </div>
     </div>
-    <autosuggest ref="Autosuggest" v-bind:language="language" v-bind:calculated-width="inputSearchWidth"></autosuggest>
-    <div class="row search-results-row" v-if="results"></div>
+    <autosuggest ref="Autosuggest" v-bind:language="language" v-bind:calculated-width="inputSearchWidth" v-on:autosuggest_accepted="search"></autosuggest>
+    <div class="row search-results-row" :class="{ small: inputSearchWidth < 300 }" v-if="results.length">
+      <product-snippet v-for="product in results" :key="product.product_id" v-bind:product="product"></product-snippet>
+    </div>
   </div>
 </template>
 
 <script>
 import Autosuggest from "./SearchAutosuggest.vue";
+import ProductSnippet from "../product/ProductSnippet.vue";
 
 let searchbar_component = {
   texts: {
@@ -25,7 +28,6 @@ let searchbar_component = {
       'search': 'Keresés'
     }
   },
-
 };
 
 /*
@@ -40,11 +42,12 @@ let watchers = {
 export default {
   name: "SearchBar",
   components: {
-    Autosuggest
+    Autosuggest,
+    ProductSnippet
   },
   data() {
     return {
-      products: require('../../data/products.json'),
+      products: require('../../data/products_' + this.language + '.json'),
       texts: searchbar_component.texts[this.language],
       //results: {},
       results: [],
@@ -63,14 +66,11 @@ export default {
 //  watch: watchers,
   methods: {
     search() {
-      this.getSuggestions(this.search_keyword);
-/*
       this.results = this.getSearchResults();
 
       if(this.sort === 1) {
         this.results = this.sortByRelevance(this.results);
       }
-*/
     },
 
     getSearchResults() {
@@ -85,6 +85,7 @@ export default {
         }
         return false;
       });
+
     },
 
     sortByRelevance(results) {
@@ -95,6 +96,7 @@ export default {
         return pos_a - pos_b;
       });
     },
+
     getSuggestions() {
       return this.$refs.Autosuggest.getSuggestions(this.search_keyword, this.language);
     }
@@ -127,5 +129,14 @@ export default {
     flex: 1 1 auto;
     width: 1%;
     margin-bottom: 0;
+  }
+
+  .search-results-row {
+    background-color: #f4f4f4f4;
+    border: 1px solid #f4f4f4f4;
+    margin: 0px;
+    padding-top: 16px;
+    max-height: 70vh;
+    overflow-y:auto;
   }
 </style>
